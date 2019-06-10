@@ -15,90 +15,96 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <script type="text/javascript" src=assets/javascript/game.js></script>
-
 </head>
 
 <body>
-<!-- <h1>The Psychic Game</h1>
 
-<h4>Guess what letter I'm thinking of</h4>
-
-<h4>Wins: </h4>
-
-<h4>Losses: </h4>
-
-<h4>Guesses Left: </h4>
-
-<h4>Your Guesses So Far: </h4> -->
-
-
-<div class="jumbotron jumbotron-primary">
-    <h1 class="display-4 text-center">The Psychic Game</h1>  
-
-    <p class="lead text-center">Guess what letter I'm thinking of.</p>
-
-    <hr class="my-4">
-
-    <p class="text-center">Wins: </p>
-
-    <p class="text-center">Losses: </p>
-
-    <p class="text-center">Guesses Left: </p>
-
-    <p class="text-center" id="guessesLeft">Your Guesses So Far:</p>
-    <button id="random-button" class="btn btn-primary btn-lg"><h1><span class="fa fa-question"></span></h1></button>
-
-
-    <p id="wins-text"></p>
-    <p id="losses-text"></p>
-    <p id="guesses-text"></p>
-  </div>
-
-
- 
-
-  <h1 class="text-center" id="random-number"></h1>
-
-<script type="text/javascript">
-
-var computerOptions = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
-var wins = 0;
-var losses = 0;
-var guessesLeft = 9;
-
-var winsText = document.getElementById("wins-text");
-var lossesText = document.getElementById("losses-text");
-var guessesLeft = document.getElementById("guesses-text");
-
-// computer selects a random letter
-var computerChoice = computerOptions[Math.floor(Math.random() * computerOptions.length)];
-
-
-document.onkeypress = function (event) {
-    var userGuess = event.key;
-
-    if (userGuess === computerChoice) {
-        wins++;
-    } else {
-        --guessesLeft;
-    }
-
-    if (guessesLeft === 0) {
-        losses++
-    }
-
-
-    // document.getElementById("wins").innerHTML = "Wins " + wins;
-    // document.getElementById("losses").innerHTML = "Losses " + losses;
-    // document.getElementById("guessesLeft").innerHTML = "Guesses left " + guessesLeft;
-    winsText.textContent = "wins: " + wins;
-    lossesText.textContent = "losses: " + losses;
-    guessesLeft.textContent = "Guesses: " + es;
-};
-
-</script>
-
- 
+    <h1> The Psychic Game</h1>
+    <h2>Guess The Letter That I Am Thinking Of</h2>
+    <div>
+      <h3 id="directions-text">Press any letter to start playing!</h3>
+      <p id="userchoice-text"></p>
+      <p id="computerchoice-text"></p>
+      <p id="wins-text"></p>
+      <p id="losses-text"></p>
+      <p id="guesses-text"></p>
+      <p id="letters-text"></p>
+    </div>
+  
+    <script type="text/javascript">
+      // Creates an array that lists out all of the options (a-z).
+      var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  
+      // Creating variables to hold the letters guesses, number of wins, losses, and guesses left.
+      var lettersGuessed = [];
+      var wins = 0;
+      var losses = 0;
+      var guesses = 9;
+  
+  
+      // Create variables that hold references to the places in the HTML where we want to display things.
+      var directionsText = document.getElementById("directions-text");
+      var userChoiceText = document.getElementById("userchoice-text");
+      var computerChoiceText = document.getElementById("computerchoice-text");
+      var lettersGuessedText = document.getElementById("letters-text");
+      var winsText = document.getElementById("wins-text");
+      var lossesText = document.getElementById("losses-text");
+      var guessesText = document.getElementById("guesses-text");
+  
+            // Randomly chooses a choice from the options array. This is the Computer's guess.
+        function computerPick() {
+          computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+        }
+       computerPick();
+  
+      // This function is run whenever the user presses a key.
+      document.onkeyup = function (event) {
+  
+  
+  
+       // Function to reset the game
+      function resetGame() {
+          computerPick();
+          lettersGuessed = [];
+          guesses = 9;
+      }
+       // Determines which key was pressed.
+        var userGuess = event.key;
+        lettersGuessed.push(userGuess);
+  
+  
+  
+        // Reworked our code from last step to use "else if" instead of lots of if statements.
+  
+        // This logic determines the outcome of the game (win/loss/tie), and increments the appropriate number
+  
+        if ((userGuess === computerGuess)) {
+          wins++;
+          resetGame();
+        } else {
+          guesses--;
+        }
+  
+        if (guesses === 0) {
+          losses++;
+          resetGame();
+        }
+  
+  
+        // Hide the directions
+        directionsText.textContent = "";
+  
+        // Display the user and computer guesses, and wins/losses/ties.
+        userChoiceText.textContent = "You just chose the letter: " + userGuess;
+        // computerChoiceText.textContent = "The computer chose the letter: " + computerGuess;
+        lettersGuessedText.textContent = "You have already guessed these letters: " + lettersGuessed;
+        winsText.textContent = "wins: " + wins;
+        lossesText.textContent = "losses: " + losses;
+        guessesText.textContent = "guesses remaining: " + guesses;
+  
+      };
+  
+    </script>
+  
 </body>
     </html>
