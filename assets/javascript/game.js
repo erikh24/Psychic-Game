@@ -1,43 +1,67 @@
 
-{/* <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> */ }
-
-// // All available options for computer to select
-// var computerOptions = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
-
-// var wins = 0;
-// var losses = 0;
-// var guessesLeft = 9;
-
-// var winsText = document.getElementById("wins-text");
-// var lossesText = document.getElementById("losses-text");
-// var guessesLeft = document.getElementById("guesses-text");
-
-// // computer selects a random letter
-// var computerChoice = computerOptions[Math.floor(Math.random() * computerOptions.length)];
+// Creates an array that lists out all of the choices for the computer to choose from (a-z)
+ var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+  
+ // Creating variables to hold the letters guessed, number of wins, number of losses, and guesses left.
+ var lettersGuessed = [];
+ var wins = 0;
+ var losses = 0;
+ var guesses = 9;
 
 
-// document.onkeypress = function (event) {
-//     var userGuess = event.key;
+ // Create variables that hold references to the places in the HTML where we want to display things.
+ var directionsText = document.getElementById("directions-text");
+ var userChoiceText = document.getElementById("userchoice-text");
+ var lettersGuessedText = document.getElementById("letters-text");
+ var winsText = document.getElementById("wins-text");
+ var lossesText = document.getElementById("losses-text");
+ var guessesText = document.getElementById("guesses-text");
 
-//     if (userGuess === computerChoice) {
-//         wins++;
-//         reset();
-//     } else {
-//         guessesLeft--;
-//     }
+// Randomly chooses a choice from the options array. This is the Computer's guess.
+  function computerPick() {
+     computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+   }
+  computerPick();
 
-//     if (guessesLeft === 0) {
-//         losses++
-//         reset();
-//     }
+ // This function is run whenever the user presses a key.
+ document.onkeyup = function (event) {
 
 
-//     // document.getElementById("wins").innerHTML = "Wins " + wins;
-//     // document.getElementById("losses").innerHTML = "Losses " + losses;
-//     // document.getElementById("guessesLeft").innerHTML = "Guesses left " + guessesLeft;
-//     winsText.textContent = "wins: " + wins;
-//     lossesText.textContent = "losses: " + losses;
-//     guessesLeft.textContent = "ties: " + ties;
-// };
+
+  // Function to reset the game
+ function resetGame() {
+     computerPick();
+     lettersGuessed = [];
+     guesses = 9;
+ }
+  // Determines which key was pressed and logs it as a letter guessed.
+   var userGuess = event.key;
+   lettersGuessed.push(userGuess);
+
+
+   // This logic determines the outcome of the game (win or loss), and increments the appropriate win/loss total, also resets game when you win or lose
+   if ((userGuess === computerGuess)) {
+     wins++;
+     resetGame();
+   } else {
+     guesses--;
+   }
+
+   if (guesses === 0) {
+     losses++;
+     resetGame();
+   }
+
+
+   // Hide the directions
+   directionsText.textContent = "";
+
+   // Display the user guess, the letters already guessed,the wins/losses and remainig guesses avialable.
+   userChoiceText.textContent = "You just chose the letter: " + userGuess;
+   lettersGuessedText.textContent = "You have already guessed these letters: " + lettersGuessed;
+   winsText.textContent = "wins: " + wins;
+   lossesText.textContent = "losses: " + losses;
+   guessesText.textContent = "guesses remaining: " + guesses;
+ };
 
 
