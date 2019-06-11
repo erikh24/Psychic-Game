@@ -7,7 +7,7 @@
  var wins = 0;
  var losses = 0;
  var guesses = 9;
-
+ var computerGuess;
 
  // Create variables that hold references to the places in the HTML where we want to display things.
  var directionsText = document.getElementById("directions-text");
@@ -21,11 +21,11 @@
   function computerPick() {
      computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
    }
+
   computerPick();
 
  // This function is run whenever the user presses a key.
  document.onkeyup = function (event) {
-
 
 
   // Function to reset the game
