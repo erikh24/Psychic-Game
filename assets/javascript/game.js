@@ -59,9 +59,9 @@
    // Display the user guess, the letters already guessed,the wins/losses and remainig guesses avialable.
    userChoiceText.textContent = "You just chose the letter: " + userGuess;
    lettersGuessedText.textContent = "You have already guessed these letters: " + lettersGuessed;
-   winsText.textContent = "wins: " + wins;
-   lossesText.textContent = "losses: " + losses;
-   guessesText.textContent = "guesses remaining: " + guesses;
+   winsText.textContent = "Wins: " + wins;
+   lossesText.textContent = "Losses: " + losses;
+   guessesText.textContent = "Guesses remaining: " + guesses;
  };
 
 
